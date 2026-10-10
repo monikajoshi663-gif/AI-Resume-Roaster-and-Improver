@@ -1,0 +1,5 @@
+# Git ignore rules for Resume Roaster
+node_modules/
+.env
+dist/
+.DS_Store
