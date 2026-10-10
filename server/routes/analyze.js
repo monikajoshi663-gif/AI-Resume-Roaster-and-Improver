@@ -24,10 +24,14 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     // ── PDF extraction ──────────────────────────────────────────────────────
     if (req.file) {
       try {
-        // pdf-parse is loaded lazily to avoid issues when the package is missing
         const pdfParse = require('pdf-parse');
         const data = await pdfParse(req.file.buffer);
-        resumeText = data.text;
+        resumeText = (data && data.text) ? data.text.trim() : '';
+        if (!resumeText) {
+          return res.status(400).json({
+            error: 'Could not extract text from PDF (it may be scanned or unreadable) — please paste the text instead.',
+          });
+        }
       } catch {
         return res.status(400).json({
           error: 'Could not extract text from PDF — please paste the text instead.',
@@ -44,8 +48,11 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     if (!jobDescription) {
       return res.status(400).json({ error: 'Job description is required.' });
     }
-    if (resumeText.split(/\s+/).length > MAX_WORDS) {
+    if (resumeText.split(/\s+/).filter(Boolean).length > MAX_WORDS) {
       return res.status(400).json({ error: 'Resume exceeds 10,000 words.' });
+    }
+    if (jobDescription.split(/\s+/).filter(Boolean).length > MAX_WORDS) {
+      return res.status(400).json({ error: 'Job description exceeds 10,000 words.' });
     }
 
     // ── Keyword matching ────────────────────────────────────────────────────
