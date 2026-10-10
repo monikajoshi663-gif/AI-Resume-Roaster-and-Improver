@@ -54,20 +54,28 @@ router.post('/', async (req, res, next) => {
     const { matched, missing } = matchKeywords(keywords, improvedResume);
     const newScore = computeScore({ matched, missing, aiScore: aiScoreImproved ?? 70 });
 
-    // Original score for pointGain (re-score original resume the same way)
-    const { matched: origMatched, missing: origMissing } = matchKeywords(keywords, resumeText);
-    // Use a conservative ai score baseline (40) if we don't have the original aiScore
-    const origScore = computeScore({ matched: origMatched, missing: origMissing, aiScore: 40 });
-    const pointGain = Math.max(0, newScore - origScore);
-
     // ── Update MongoDB record if we have an analysisId ────────────────────────
+    let origScore = null;
     if (analysisId && mongoose.connection.readyState === 1) {
       try {
-        await Analysis.findByIdAndUpdate(analysisId, { improvedScore: newScore });
+        const existing = await Analysis.findByIdAndUpdate(
+          analysisId,
+          { improvedScore: newScore },
+          { new: false }
+        );
+        if (existing && typeof existing.score === 'number') {
+          origScore = existing.score;
+        }
       } catch (dbErr) {
         console.warn('DB update failed (non-fatal):', dbErr.message);
       }
     }
+
+    if (origScore === null) {
+      const { matched: origMatched, missing: origMissing } = matchKeywords(keywords, resumeText);
+      origScore = computeScore({ matched: origMatched, missing: origMissing, aiScore: 40 });
+    }
+    const pointGain = Math.max(0, newScore - origScore);
 
     res.json({
       rewrites,

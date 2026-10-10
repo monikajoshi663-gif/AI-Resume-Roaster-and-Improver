@@ -24,15 +24,15 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     // ── PDF extraction ──────────────────────────────────────────────────────
     if (req.file) {
       try {
-        const pdfParse = require('pdf-parse');
-        const data = await pdfParse(req.file.buffer);
+        const { parsePdfBuffer } = require('../utils/parsePdf');
+        const data = await parsePdfBuffer(req.file.buffer);
         resumeText = (data && data.text) ? data.text.trim() : '';
         if (!resumeText) {
           return res.status(400).json({
             error: 'Could not extract text from PDF (it may be scanned or unreadable) — please paste the text instead.',
           });
         }
-      } catch {
+      } catch (pdfErr) {
         return res.status(400).json({
           error: 'Could not extract text from PDF — please paste the text instead.',
         });
@@ -69,10 +69,12 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     const score = computeScore({ matched, missing, aiScore: aiScore ?? 50 });
 
     // ── Persist to MongoDB (fire-and-forget, non-blocking) ──────────────────
+    const jobTitle = jobDescription.split('\n')[0].replace(/^#+\s*/, '').trim().slice(0, 120);
     let analysisId = null;
     if (mongoose.connection.readyState === 1) {
       try {
         const doc = await Analysis.create({
+          jobTitle,
           score,
           missingKeywords: missing,
           matchedKeywords: matched,
