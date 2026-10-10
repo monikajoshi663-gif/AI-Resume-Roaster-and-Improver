@@ -61,7 +61,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
 
     // ── LLM call ────────────────────────────────────────────────────────────
     const { system, user } = analyzePrompt({ resumeText, jobDescription, missingKeywords: missing, tone });
-    const llmResult = await callLLM({ system, user, type: 'analyze' });
+    const llmResult = await callLLM({ system, user, type: 'analyze', tone, resumeText });
 
     const { aiScore, scoreReason, roast, weakBullets } = llmResult;
 
