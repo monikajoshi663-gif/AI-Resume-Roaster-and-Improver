@@ -1,0 +1,35 @@
+{
+  "demoJobDescription": "Software Engineer Intern - Full Stack\n\nAbout the role:\nWe are looking for a passionate Software Engineering Intern to join our engineering team. You will build and scale web applications, design REST APIs, and collaborate with cross-functional teams.\n\nRequirements:\n- Proficiency in React, Node.js, and TypeScript\n- Hands-on experience designing REST APIs and working with MongoDB or PostgreSQL\n- Familiarity with Git, Docker, and CI/CD pipelines\n- Strong problem-solving skills and eager to learn in a fast-paced environment",
+  "demoResume": "Alex Chen\nalex.chen@example.com | San Francisco, CA | (555) 123-4567\n\nEDUCATION\nState University - B.S. in Computer Science (Expected May 2027)\nRelevant Coursework: Data Structures, Web Development, Databases\nGPA: 3.2\n\nTECHNICAL SKILLS\nLanguages: JavaScript, HTML, CSS, Python\nTools: Git, Microsoft Office, VS Code\n\nPROJECTS & EXPERIENCE\nCampus Event Finder (Web Project)\n- Built a basic React frontend for student club events\n- Assisted with development of internal tools and bug fixes\n- Helped team members with various tasks\n\nIT Support Student Assistant\n- Resolved printer issues and password resets for faculty\n- Documented common hardware problems in Microsoft Word",
+  "savedFallbackAnalyze": {
+    "score": 42,
+    "scoreReason": "Resume is missing critical stack keywords like Node.js, TypeScript, and REST APIs, and bullet points lack measurable metrics.",
+    "matchedKeywords": ["react", "git"],
+    "missingKeywords": ["node.js", "typescript", "rest apis", "mongodb", "postgresql", "docker", "ci/cd"],
+    "roast": [
+      "Your 'proficient in Microsoft Office' line is doing heavy lifting for a software engineering role.",
+      "Two bullet points start with 'Assisted' and 'Helped' — you assisted your way through your degree.",
+      "No GitHub or live demo link. Are recruiters supposed to take your word for it?",
+      "GPA of 3.2 listed before any significant technical achievements: bold strategy."
+    ],
+    "weakBullets": [
+      "Assisted with development of internal tools and bug fixes",
+      "Helped team members with various tasks"
+    ]
+  },
+  "savedFallbackImprove": {
+    "rewrites": [
+      {
+        "original": "Assisted with development of internal tools and bug fixes",
+        "rewritten": "Built and deployed 4 internal React dashboard modules that cut manual triage turnaround by 40% across a 12-person team"
+      },
+      {
+        "original": "Helped team members with various tasks",
+        "rewritten": "Architected Node.js and Express REST API endpoints with automated tests, cutting developer onboarding latency from 2 weeks to 4 days"
+      }
+    ],
+    "improvedResume": "Alex Chen\nalex.chen@example.com | San Francisco, CA | (555) 123-4567\n\nEDUCATION\nState University - B.S. in Computer Science (Expected May 2027)\nRelevant Coursework: Data Structures, Web Development, Databases\nGPA: 3.2\n\nTECHNICAL SKILLS\nLanguages: JavaScript, HTML, CSS, Python\nTools: Git, Microsoft Office, VS Code\n\nPROJECTS & EXPERIENCE\nCampus Event Finder (Web Project)\n- Built a basic React frontend for student club events\n- Built and deployed 4 internal React dashboard modules that cut manual triage turnaround by 40% across a 12-person team\n- Architected Node.js and Express REST API endpoints with automated tests, cutting developer onboarding latency from 2 weeks to 4 days\n\nIT Support Student Assistant\n- Resolved printer issues and password resets for faculty\n- Documented common hardware problems in Microsoft Word",
+    "newScore": 85,
+    "pointGain": 43
+  }
+}
